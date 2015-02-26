@@ -134,7 +134,7 @@ input[type="text"], input[type="password"], input[type="submit"], input[type="re
      float: left;
      left: 20px;
      padding-left: 80px;
-     padding-right: 50px;
+     padding-right: 40px;
      position: absolute;
      width: 100%;
 }
@@ -153,7 +153,8 @@ input[type="text"], input[type="password"], input[type="submit"], input[type="re
 }
 
 .post > form input[type="submit"] {
-     border: medium none;
+	box-sizing: border-box;
+     border: 3px solid rgba(255, 255, 255, 0.3);
      display: block;
      float: right;
      height: 80px;
@@ -161,8 +162,9 @@ input[type="text"], input[type="password"], input[type="submit"], input[type="re
      padding: 0px;
      position: relative;
      top: -82px;
-     vertical-align: bottom;
      width: 80px;
+     background: rgba(17, 17, 17, 0.5);
+     color: rgba(255, 255, 255, 0.8);
 }
 
 .post:after {
@@ -171,9 +173,56 @@ input[type="text"], input[type="password"], input[type="submit"], input[type="re
      display: block;
 }
 
-.clearfix {
-/*	clear: both;
-*/}
+.contents {
+	padding: 20px;
+	padding-right: 10px;
+	margin-top: 20px;
+	position: relative;
+}
+
+.contents .blog-text {
+	box-sizing: border-box;
+	height: auto;
+	background: #fff;
+	padding: 20px;
+	margin-left: 80px;
+	margin-bottom: 20px;
+	border-radius: 5px;
+	border: 3px solid #aaa;
+	position: relative;
+}
+
+.blog-text:hover::before {
+	background: orange;
+}
+
+.blog-text::before {
+	content: '';
+	box-sizing: border-box;
+	height: 40px;
+	width: 40px;
+	background: #ddd;
+	position: absolute;
+	top: 50%;
+	margin-top: -20px;
+	left: -95px;
+	border-radius: 20px;
+	border: 3px solid #fff;
+	transition: background 1s;
+}
+
+.contents .blog-text::after {
+	content: '';
+	height: 0;
+	width: 55px;
+	background: green;
+	position: absolute;
+	border-bottom: 4px solid #fff;
+	top: 50%;
+	margin-top: -3px;
+	left: -55px;
+	z-index: 1;
+}
 
 @media(max-height: 600px) {
 	.main {

@@ -18,7 +18,18 @@
 				<input type="submit" value="发射！">
 			</form>
 		</div>
-		<div class="main microblog"></div>
+		<div class="contents">
+			<div class="blog-text">
+				<div class="text-main"></div>
+				<div class="text-messages"></div>
+			</div>
+			<div class="blog-text">123</div>
+			<div class="blog-text">123</div>
+			<div class="blog-text">123</div>
+			<div class="blog-text">123</div>
+			<div class="blog-text">123</div>
+		</div>
+		<div class="pages">More..</div>
 	</div>
 	<div class="footer">&copy 2015 By Sky</div>
 <?php
