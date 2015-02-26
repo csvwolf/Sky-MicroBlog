@@ -5,6 +5,15 @@ html, body {
 	min-height: 100%;
 }
 
+html {
+	position: relative;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
 body {
 	background: url(../img/background.jpg) no-repeat;
 	background-size: cover;
@@ -20,12 +29,13 @@ input[type="text"], input[type="password"], input[type="submit"], input[type="re
 	border: none;
     font-family: "Helvetica Neue", Helvetica, Arial, 'Microsoft Yahei', sans-serif;
 }
-
+/* login */
 .container {
 	max-width: 400px;
 	height: 100%;
 	margin: 0 auto;
 	position: relative;
+	padding-bottom: 40px;
 }
 
 .main {
@@ -86,12 +96,102 @@ input[type="text"], input[type="password"], input[type="submit"], input[type="re
 	border-radius: 5px;
 }
 
+/* microblog page */
+.container.microblog {
+	max-width: 800px;
+	padding: 40px 20px;
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.microblog > header > h1{
+/*	margin-left: 20px;
+*/	display: inline-block;
+}
+
+.microblog > header > h1 > a {
+	border-bottom: 1px dotted #000;
+}
+
+.microblog > header > h1 + span {
+	margin-left: 10px;
+}
+
+.post {
+     margin-top: 20px;
+}
+
+.post > .avatar {
+     border-radius: initial;
+     box-sizing: border-box;
+     float: left;
+     height: 80px;
+     margin: initial;
+     width: 80px;
+}
+
+.post > form {
+     box-sizing: border-box;
+     float: left;
+     left: 20px;
+     padding-left: 80px;
+     padding-right: 50px;
+     position: absolute;
+     width: 100%;
+}
+
+.post > form textarea {
+     background-color: rgba(0, 0, 0, 0.3);
+     border: medium none;
+     box-sizing: border-box;
+     color: rgba(255, 255, 255, 0.8);
+     font-family: "Helvetica Neue",Helvetica,Arial,"Microsoft Yahei",sans-serif;
+     height: 80px;
+     padding: 10px 80px 10px 10px;
+     position: relative;
+     resize: initial;
+     width: 100%;
+}
+
+.post > form input[type="submit"] {
+     border: medium none;
+     display: block;
+     float: right;
+     height: 80px;
+     margin: 0px;
+     padding: 0px;
+     position: relative;
+     top: -82px;
+     vertical-align: bottom;
+     width: 80px;
+}
+
+.post:after {
+     clear: both;
+     content: "";
+     display: block;
+}
+
+.clearfix {
+/*	clear: both;
+*/}
+
+@media(max-height: 600px) {
+	.main {
+		padding-top: 20px;
+	}
+}
+
 @media(max-height: 400px) {
 	.main {
 		padding-top: 10px;
 	}
 }
 
-.red {
-	background: red;
+.footer {
+	position: absolute;
+	bottom: 0;
+	height: 40px;
+	width: 100%;
+	text-align: center;
+	color: rgba(255,255,255, 0.8);
 }

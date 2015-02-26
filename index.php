@@ -14,6 +14,9 @@
 				</form>
 			</div>
 		</div>
+	</div>
+	
+	<div class="footer">&copy 2015 By Sky</div>
 <?php
 	if (!isset($_SERVER['HTTP_PJAX']))
 		include('common/footer.php')
