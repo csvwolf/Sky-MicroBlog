@@ -1,11 +1,18 @@
-<?php
-	session_start();
-	if (!isset($_SESSION['login']))
-		header('Location: index.php');
-
-	if (!isset($_SERVER['HTTP_PJAX']))
-		include('common/header.php');
-?>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<!-- 取消移动设备默认缩放 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, target-densitydpi=device-dpi">
+	<meta name="description" content="Just a MicroBlog">
+	<meta name="keywords" content="MicroBlog">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/core.js"></script>
+	<title>Index - 简单微博系统</title>
+</head>
+<body>
 	<div class="container microblog">
 		<header>
 			<h1><a href="#">Power Wind</a></h1>
@@ -29,12 +36,12 @@
 				<li><a href="#4">4</a></li>
 				<li><a href="#">Next</a></li>
 			</ul>
-			<div class="footer">&copy 2015 By Sky</div>
-
 		</div>
 	</div>
+	<div class="footer">&copy 2015 By Sky</div>
 	<script type="text/javascript" src="js/message.js"></script>
-<?php
-	if (!isset($_SERVER['HTTP_PJAX']))
-		include('common/footer.php')
-?>
+<!--
+ 	<button>刷新</button>
+ --> 
+</body>
+</html>
