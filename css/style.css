@@ -29,6 +29,12 @@ input[type="text"], input[type="password"], input[type="submit"], input[type="re
 	border: none;
     font-family: "Helvetica Neue", Helvetica, Arial, 'Microsoft Yahei', sans-serif;
 }
+
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
 /* login */
 .container {
 	max-width: 400px;
@@ -103,13 +109,15 @@ input[type="text"], input[type="password"], input[type="submit"], input[type="re
 	background-color: rgba(0, 0, 0, 0.2);
 }
 
+/* microblog header */
 .microblog > header > h1{
 /*	margin-left: 20px;
 */	display: inline-block;
+	color: rgba(255, 255, 255, 0.4);
 }
 
 .microblog > header > h1 > a {
-	border-bottom: 1px dotted #000;
+	border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
 }
 
 .microblog > header > h1 + span {
@@ -173,6 +181,7 @@ input[type="text"], input[type="password"], input[type="submit"], input[type="re
      display: block;
 }
 
+/* Microblog Body */
 .contents {
 	padding: 20px;
 	padding-right: 10px;
@@ -184,12 +193,13 @@ input[type="text"], input[type="password"], input[type="submit"], input[type="re
 	box-sizing: border-box;
 	height: auto;
 	background: #fff;
-	padding: 20px;
+	padding: 10px 20px 5px 20px;
 	margin-left: 80px;
 	margin-bottom: 20px;
 	border-radius: 5px;
 	border: 3px solid #aaa;
 	position: relative;
+	width: auto;
 }
 
 .blog-text:hover::before {
@@ -222,6 +232,53 @@ input[type="text"], input[type="password"], input[type="submit"], input[type="re
 	margin-top: -3px;
 	left: -55px;
 	z-index: 1;
+}
+
+.contents .blog-text .text-main {
+	height: auto;
+	width: 100%;
+	padding-bottom: 20px;
+}
+
+.contents .blog-text .text-main textarea {
+	resize: none;
+	height: auto;
+	width: 100%;
+	display: none;
+}
+
+.contents .blog-text .text-messages {
+	position: absolute;
+	bottom: 0;
+	right: 20px;
+	left: 20px;
+	width: auto;
+	height: 20px;
+}
+
+.contents .blog-text .text-messages ul {
+	display: block;
+}
+
+.contents .blog-text .text-messages ul li {
+	display: inline;
+}
+
+.contents .blog-text .text-messages button {
+	height: 100%;
+	width: 50%;
+	float: left;
+	display: none;
+}
+
+/* microblog-pages */
+.container .pages {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.container .pages ul li {
+	display: inline-block;
 }
 
 @media(max-height: 600px) {
