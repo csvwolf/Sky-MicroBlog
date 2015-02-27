@@ -2,6 +2,8 @@ $(document).ready(function() {
 	var init_url = window.location.pathname;
 	var init_title = $('title').html();
 
+	var message = new Message();
+	/* Page Switch Ajax */
 	var pajax = function(targetUrl, targetTitle) {
 		$.ajax({
 			dataType: 'html',
@@ -20,6 +22,7 @@ $(document).ready(function() {
 		});		
 	};
 
+	/* Index Login Button Click */
 	$('.login>input[type="submit"]').click(function() {
 		$.ajax({
 			type: 'POST',
@@ -51,28 +54,30 @@ $(document).ready(function() {
 		return false;
 	});
 
-	$('button').click(function() {
+	$('.post-message>input[type="submit"]').click(function(){
 		$.ajax({
-			dataType: 'html',
-			type: 'GET',
-			url: 'blog.php',
+			type: 'POST',
+			url: 'core/post-message.php',
+			data: $('.post-message').serialize(),
+			dataType: 'json',
 			success: function(data) {
-				$('html').children().remove();
-				$('body').html(data);
-				window.history.pushState({url: 'blog.php'}, 'Hello', 'blog.php');
+				//alert(data.id);
+				message.addNew(data.id, data.content, data.time, true);
+			},
+			error: function() {
+
 			}
 		});
+		return false;
 	});
 
 	window.addEventListener('popstate', function(e){  
-      	//alert('hello');
       	var url;
       	var title;
 		if (window.history.state){  
 			var state = e.state;
 			url = state.url;
 			title = state.title;
-		//do something(state.url, state.title); 
 		} else {
 			url = init_url;
 			title = init_title;
