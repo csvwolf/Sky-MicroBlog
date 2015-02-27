@@ -25,7 +25,7 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 0;
 }
 
-input[type="text"], input[type="password"], input[type="submit"], input[type="reset"], input[type="button"], button {
+input[type="text"], input[type="password"], textarea, input[type="submit"], input[type="reset"], input[type="button"], button {
 	border: none;
     font-family: "Helvetica Neue", Helvetica, Arial, 'Microsoft Yahei', sans-serif;
 }
@@ -107,13 +107,15 @@ ul {
 	max-width: 800px;
 	padding: 40px 20px;
 	background-color: rgba(0, 0, 0, 0.2);
+	min-height: 100%;
 }
 
 /* microblog header */
 .microblog > header > h1{
-/*	margin-left: 20px;
-*/	display: inline-block;
+/*	margin-left: 20px; */
+	display: inline-block;
 	color: rgba(255, 255, 255, 0.4);
+	text-shadow: 1px 1px 5px #bbb;
 }
 
 .microblog > header > h1 > a {
@@ -122,6 +124,8 @@ ul {
 
 .microblog > header > h1 + span {
 	margin-left: 10px;
+	color: rgba(255, 255, 255, 0.5);
+	text-shadow: 1px 1px 5px #bbb;
 }
 
 .post {
@@ -152,7 +156,6 @@ ul {
      border: medium none;
      box-sizing: border-box;
      color: rgba(255, 255, 255, 0.8);
-     font-family: "Helvetica Neue",Helvetica,Arial,"Microsoft Yahei",sans-serif;
      height: 80px;
      padding: 10px 80px 10px 10px;
      position: relative;
@@ -187,23 +190,27 @@ ul {
 	padding-right: 10px;
 	margin-top: 20px;
 	position: relative;
+	color: rgba(255, 255, 255, 0.6);
 }
 
 .contents .blog-text {
 	box-sizing: border-box;
 	height: auto;
-	background: #fff;
+	background: rgba(0, 0, 0, 0.2);
 	padding: 10px 20px 5px 20px;
 	margin-left: 80px;
 	margin-bottom: 20px;
 	border-radius: 5px;
-	border: 3px solid #aaa;
+	border: 3px solid rgba(0, 0, 0, 0.3);
 	position: relative;
 	width: auto;
 }
 
 .blog-text:hover::before {
-	background: orange;
+	background: url(../img/avatar.jpg);
+	background-color: rgba(0, 0, 0, 0.5);
+	background-size: cover;
+	background-position: bottom;
 }
 
 .blog-text::before {
@@ -211,23 +218,23 @@ ul {
 	box-sizing: border-box;
 	height: 40px;
 	width: 40px;
-	background: #ddd;
+	background: rgba(0, 0, 0, 0.3);
 	position: absolute;
 	top: 50%;
 	margin-top: -20px;
 	left: -95px;
 	border-radius: 20px;
-	border: 3px solid #fff;
+	border: 3px solid rgba(0, 0, 0, 0.3);
 	transition: background 1s;
 }
 
 .contents .blog-text::after {
 	content: '';
 	height: 0;
-	width: 55px;
-	background: green;
+	width: 52px;
+	background: rgba(0, 0, 0, 0.3);
 	position: absolute;
-	border-bottom: 4px solid #fff;
+	border-bottom: 4px solid rgba(0, 0, 0, 0.2);
 	top: 50%;
 	margin-top: -3px;
 	left: -55px;
@@ -237,23 +244,28 @@ ul {
 .contents .blog-text .text-main {
 	height: auto;
 	width: 100%;
-	padding-bottom: 20px;
+	padding-bottom: 24px;
 }
 
 .contents .blog-text .text-main textarea {
+	box-sizing: border-box;
+	padding: 10px;
 	resize: none;
 	height: auto;
 	width: 100%;
+	color: rgba(255, 255, 255, 0.6);
+	background: rgba(0, 0, 0, 0.3);
 	display: none;
 }
 
 .contents .blog-text .text-messages {
 	position: absolute;
-	bottom: 0;
+	bottom: 1px;
 	right: 20px;
 	left: 20px;
 	width: auto;
 	height: 20px;
+	font-size: 0.8em;
 }
 
 .contents .blog-text .text-messages ul {
@@ -264,10 +276,25 @@ ul {
 	display: inline;
 }
 
+.contents .blog-text .text-messages ul .operate {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+.contents .blog-text .text-messages ul #delete {
+	color: #FF2121;
+	margin-left: 15px;
+}
+
 .contents .blog-text .text-messages button {
+	box-sizing: border-box;
 	height: 100%;
 	width: 50%;
 	float: left;
+	background: rgba(0, 0, 0, 0.3);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	color: rgba(255, 255, 255, 0.6);
 	display: none;
 }
 
@@ -279,6 +306,18 @@ ul {
 
 .container .pages ul li {
 	display: inline-block;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	background: rgba(0, 0, 0, 0.3);
+	height: 30px;
+	line-height: 30px;
+	min-width: 30px;
+	padding: 0 5px;
+}
+
+.container .pages ul li a {
+	display: block;
+	font-size: 0.8em;
+	color: rgba(255, 255, 255, 0.6);
 }
 
 @media(max-height: 600px) {
