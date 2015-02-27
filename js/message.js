@@ -87,3 +87,22 @@ Message.prototype.addNew = function(id, content ,time, fade) {
 		return false;
 	});
 }
+
+var message = new Message();
+
+$('.post-message>input[type="submit"]').click(function(){
+	$.ajax({
+		type: 'POST',
+		url: 'core/post-message.php',
+		data: $('.post-message').serialize(),
+		dataType: 'json',
+		success: function(data) {
+			//alert(data.id);
+			message.addNew(data.id, data.content, data.time, true);
+		},
+		error: function() {
+
+		}
+	});
+	return false;
+});

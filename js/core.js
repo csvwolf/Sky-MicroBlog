@@ -2,7 +2,6 @@ $(document).ready(function() {
 	var init_url = window.location.pathname;
 	var init_title = $('title').html();
 
-	var message = new Message();
 	/* Page Switch Ajax */
 	var pajax = function(targetUrl, targetTitle) {
 		$.ajax({
@@ -49,23 +48,6 @@ $(document).ready(function() {
 			},
 			error: function() {
 				$('.tip').html('Something Wrong');
-			}
-		});
-		return false;
-	});
-
-	$('.post-message>input[type="submit"]').click(function(){
-		$.ajax({
-			type: 'POST',
-			url: 'core/post-message.php',
-			data: $('.post-message').serialize(),
-			dataType: 'json',
-			success: function(data) {
-				//alert(data.id);
-				message.addNew(data.id, data.content, data.time, true);
-			},
-			error: function() {
-
 			}
 		});
 		return false;
