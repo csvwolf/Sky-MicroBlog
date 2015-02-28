@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/core.js"></script>
+	<script type="text/javascript" src="js/pjax.js"></script>
 	<title>Index - 简单微博系统</title>
 </head>
 <body>

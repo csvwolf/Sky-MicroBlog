@@ -22,18 +22,19 @@
 		</div>
 		<div class="pages">
 			<ul>
-				<li><a href="#">Prev</a></li>
-				<li><a href="#1">1</a></li>
-				<li><a href="#2">2</a></li>
-				<li><a href="#3">3</a></li>
-				<li><a href="#4">4</a></li>
-				<li><a href="#">Next</a></li>
+				<li>Prev</li>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>Next</li>
 			</ul>
 			<div class="footer">&copy 2015 By Sky</div>
 
 		</div>
 	</div>
 	<script type="text/javascript" src="js/message.js"></script>
+	<script type="text/javascript" src="js/page.js"></script>
 <?php
 	if (!isset($_SERVER['HTTP_PJAX']))
 		include('common/footer.php')

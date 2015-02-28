@@ -312,15 +312,12 @@ ul {
 	border: 1px solid rgba(255, 255, 255, 0.1);
 	background: rgba(0, 0, 0, 0.3);
 	height: 30px;
-	line-height: 30px;
 	min-width: 30px;
-	padding: 0 5px;
-}
-
-.container .pages ul li a {
-	display: block;
+	line-height: 30px;
+	padding: 5px;
 	font-size: 0.8em;
 	color: rgba(255, 255, 255, 0.6);
+	cursor: pointer;
 }
 
 @media(max-height: 600px) {
