@@ -1,3 +1,3 @@
 <?php
-	echo json_encode("5");
+	echo json_encode(5);
 ?>

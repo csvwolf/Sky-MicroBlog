@@ -1,5 +1,5 @@
-init = {};
-/* Page Switch Ajax */
+/*init = {};
+*//* Page Switch Ajax */
 var pajax = function(targetUrl, targetTitle) {
 	$.ajax({
 		dataType: 'html',
@@ -13,7 +13,7 @@ var pajax = function(targetUrl, targetTitle) {
 			$('body').append(data);
 			console.log(data);
 			$('title').html(targetTitle);
-			window.history.pushState({url: targetUrl, title: targetTitle}, 'Hello', targetUrl);
+			window.history.pushState({type:'url', url: targetUrl, title: targetTitle}, 'Hello', targetUrl);
 		}
 	});		
 };
@@ -25,23 +25,25 @@ window.addEventListener('popstate', function(e){
 		var state = e.state;
 		url = state.url;
 		title = state.title;
-	} else {
-		url = init.init_url;
-		title = init.init_title;
+		type = state.type;
 	}
-
-	$.ajax({
-		dataType: 'html',
-		type: 'GET',
-		url: url,
-		headers: {
-			Pjax: true
-		},
-		success: function(data) {
-			$('body').contents().remove();
-			$('body').append(data);
-			console.log(data);
-			$('title').html(title);
-		}
-	});      
+	if (type != 'page') {
+		$.ajax({
+			dataType: 'html',
+			type: 'GET',
+			url: url,
+			headers: {
+				Pjax: true
+			},
+			success: function(data) {
+				$('body').contents().remove();
+				$('body').append(data);
+				console.log(data);
+				$('title').html(title);
+			}
+		});
+	} else {
+		page.pjax = true;
+		page.switchPage(state.pageNumber);
+	}
 });  

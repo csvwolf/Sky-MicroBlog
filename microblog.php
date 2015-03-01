@@ -19,15 +19,17 @@
 			</form>
 		</div>
 		<div class="contents">
+			<span>正在努力加载内容...</span>
 		</div>
 		<div class="pages">
 			<ul>
-				<li>Prev</li>
-				<li>1</li>
-				<li>2</li>
-				<li>3</li>
-				<li>4</li>
-				<li>Next</li>
+				<span>正在努力加载页码...</span>
+<!-- 				<li class="prev">Prev</li>
+				<li class="current number">1</li>
+				<li class="number">2</li>
+				<li class="number">3</li>
+				<li class="number">4</li>
+				<li class="next">Next</li> -->
 			</ul>
 			<div class="footer">&copy 2015 By Sky</div>
 
@@ -35,6 +37,11 @@
 	</div>
 	<script type="text/javascript" src="js/message.js"></script>
 	<script type="text/javascript" src="js/page.js"></script>
+	<script type="text/javascript">
+		if (!history.state) {
+			window.history.replaceState({type: 'url', pageNumber: page.currentPage, title: 'microblog'}, 'Hello', 'microblog.php');
+		}
+	</script>
 <?php
 	if (!isset($_SERVER['HTTP_PJAX']))
 		include('common/footer.php')

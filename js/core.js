@@ -1,7 +1,6 @@
 $(document).ready(function() {
-	init.init_url = window.location.pathname;
-	init.init_title = $('title').html();
-
+/*	init.init_url = window.location.pathname;
+	init.init_title = $('title').html();*/
 
 	/* Index Login Button Click */
 	$('.login>input[type="submit"]').click(function() {

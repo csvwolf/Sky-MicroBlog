@@ -15,6 +15,11 @@
 			</div>
 		</div>
 		<div class="footer">&copy 2015 By Sky</div>
+		<script type="text/javascript">
+		if (!history.state) {
+			window.history.replaceState({type:'url', url: 'index.php', title: 'Home'}, 'Hello', 'index.php');
+		}
+		</script>
 	</div>
 <?php
 	if (!isset($_SERVER['HTTP_PJAX']))

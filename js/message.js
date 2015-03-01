@@ -1,12 +1,15 @@
 function Message() {
-	this.getMessage();
 }
 
-Message.prototype.getMessage = function() {
+Message.prototype.getMessage = function(pageNumber) {
 	var self = this;
+	if (pageNumber)
+		url = 'core/get-message.php?page=' + pageNumber;
+	else
+		url = 'core/get-message.php';
 	$.ajax({
 		type: 'GET',
-		url: 'core/get-message.php',
+		url: url,
 		data: {},
 		success: function(data) {
 			$('.contents').children().remove();
@@ -75,7 +78,9 @@ Message.prototype.addNew = function(id, content ,time, fade) {
 		});
 
 		$('#confirm-edit').click(function() {
-			alert(id);
+			parent.find('.text-main').html(text);
+			parent.find('ul').css({display:'block'});
+			parent.find('button').css({display: 'none'});
 		});
 		return false;
 	});
