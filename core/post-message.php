@@ -1,12 +1,13 @@
 <?php
-	session_start();
-	if (!isset($_SESSION['login']))
-		header('Location: index.php');
-
+	include('../common/common.php');
 	include('../common/dbconfig.php');
 
+	if (!islogin()) {
+		exit;
+	}
+
 	if (!empty($_POST['message'])) {
-		$content = $_POST['message'];
+		$content = filterString($_POST['message']);
 		$time = time();
 
 		$query = 'INSERT INTO `sky_contents` (`content`, `time`) VALUES(:content, :time)';

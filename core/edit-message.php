@@ -1,12 +1,13 @@
 <?php
-	session_start();
-	if (!isset($_SESSION['login']))
-		header('Location: index.php');
-
+	include('../common/common.php');
 	include('../common/dbconfig.php');
 
+	if (!islogin()) {
+		exit;
+	}
+
 	if (!empty($_POST['content'])) {
-		$content = $_POST['content'];
+		$content = filterString($_POST['content']);
 		$id = $_POST['id'];
 
 		$query = 'UPDATE `sky_contents` SET content = :content WHERE id = :id';
