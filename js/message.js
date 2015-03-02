@@ -16,7 +16,7 @@ Message.prototype.getMessage = function(pageNumber) {
 			var array = $.parseJSON(data);
 			var i, message;
 			$.each(array, function(i, message) {
-				self.addNew(message.id, message.content, message.time, false);
+				self.addNew(message.id, message.content, message.time, false, true);
 			});
 		},
 		error: function() {
@@ -37,16 +37,37 @@ Message.prototype.editMessage = function(id, content) {
 		error: function() {
 
 		}
-	})
+	});
 }
 
-Message.prototype.addNew = function(id, content ,time, fade) {
-	$('.contents').prepend('<div style="display:none" class="blog-text">');
+Message.prototype.deleteMessage = function(id) {
+	$.ajax({
+		type: 'POST',
+		url: 'core/delete-message.php',
+		data: {id, id},
+		dataType: 'json',
+		success: function(data) {
+
+		}
+	});
+}
+
+Message.prototype.addNew = function(id, content ,time, fade, load) {
+	var self = this;
+	if (load)
+		$('.contents').append('<div style="display:none" class="blog-text">');
+	else
+		$('.contents').prepend('<div style="display:none" class="blog-text">');
+
 	if (fade)
 		$('.blog-text').fadeIn(1000);
 	else
 		$('.blog-text').css({display: 'block'});
-	var parentContainer = $('.blog-text:first-child');
+	if (load)
+		var parentContainer = $('.blog-text:last-child');
+	else
+		var parentContainer = $('.blog-text:first-child');		
+	
 	parentContainer.append('<div class="text-main">');
 	parentContainer.children('.text-main').html(content);
 	parentContainer.append('<div class="text-messages">');
@@ -70,22 +91,27 @@ Message.prototype.addNew = function(id, content ,time, fade) {
 		parent.find('.text-main').html('<textarea>' + text + '</textarea>');
 		parent.find('ul').css({display: 'none'});
 		parent.find('button').css({display: 'block'});
+		var cancel = parent.find('#cancel-edit');
+		var confirm = parent.find('#confirm-edit');
 
-		$('#cancel-edit').click(function(){
+		cancel.click(function(){
 			parent.find('.text-main').html(text);
 			parent.find('ul').css({display:'block'});
 			parent.find('button').css({display: 'none'});
 		});
 
-		$('#confirm-edit').click(function() {
-			parent.find('.text-main').html(text);
+		confirm.click(function() {
+			var content = parent.find('textarea').val();
+			parent.find('.text-main').html(content);
 			parent.find('ul').css({display:'block'});
 			parent.find('button').css({display: 'none'});
+			self.editMessage(id, content);
 		});
 		return false;
 	});
 
 	delBtn.click(function(){
+		self.deleteMessage(id);
 		$(this).parents('.blog-text').fadeOut(1000, function(){
 			$(this).remove();
 		});
