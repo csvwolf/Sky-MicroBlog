@@ -26,19 +26,40 @@ Message.prototype.getMessage = function(pageNumber) {
 }
 
 Message.prototype.postMessage = function() {
-	$.ajax({
-		type: 'POST',
-		url: 'core/post-message.php',
-		data: $('.post-message').serialize(),
-		dataType: 'json',
-		success: function(data) {
-			//alert(data.id);
-			message.addNew(data.id, data.content, data.time, true);
-		},
-		error: function() {
-
-		}
-	});	
+	var self = this;
+	if (!this.checkMessageForm()) {
+		alert('数据为空，不开心');
+	} else {
+		$.ajax({
+			type: 'POST',
+			url: 'core/post-message.php',
+			data: $('.post-message').serialize(),
+			dataType: 'json',
+			success: function(data) {
+				var status = data.status;
+				switch(status) {
+					case 'success':
+						message.addNew(data.id, data.content, data.time, true);
+						self.clearMessageForm();
+						page.getPageNumber(page.changePages, [page.currentPage]);
+						break;
+					case 'not login':
+						alert('您还未登录...');
+						window.location.href = 'index.php';
+						break;
+					case 'sql error':
+						alert('插入失败，请重试');
+						break;
+					case 'database error':
+						alert('数据库载入失败');
+						break;
+				}
+			},
+			error: function() {
+				alert('未知错误');
+			}
+		});
+	}
 }
 
 Message.prototype.editMessage = function(id, content) {
@@ -138,6 +159,14 @@ Message.prototype.addNew = function(id, content ,time, fade, load) {
 		});
 		return false;
 	});
+}
+
+Message.prototype.clearMessageForm = function() {
+	$('.post-message>textarea').val('');
+}
+
+Message.prototype.checkMessageForm = function() {
+	return $('.post-message>textarea').val().trim() == ''?false:true;
 }
 
 var message = new Message();

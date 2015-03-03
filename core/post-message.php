@@ -23,16 +23,16 @@
 			if ($success) {
 				$insertId = $dbh->lastInsertId();
 
-				$arr = Array('id' => $insertId, 'content'=> $content, 'time' => $time);
+				$arr = Array('id' => $insertId, 'content'=> $content, 'time' => date('Y-m-d H:i:s',$time));
 			} else {
 				$status = 'sql error';
 			}
 		} else {
-			$status = 'content messing';
+			$status = 'content missing';
 		}
 	}
 //	echo date('Y-M-D H:i:s');
 	$arr['status'] = $status;
-	
+
 	echo json_encode($arr);
 ?>

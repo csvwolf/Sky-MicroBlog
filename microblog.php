@@ -14,7 +14,7 @@
 		<div class="post">
 			<div class="avatar"></div>
 			<form class="post-message" method="post">
-				<textarea name="message" placeholder="好想吐槽啊..." required></textarea>
+				<textarea name="message" placeholder="好想吐槽啊..."></textarea>
 				<input type="submit" value="发射！">
 			</form>
 		</div>
