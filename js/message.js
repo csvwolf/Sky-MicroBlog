@@ -11,16 +11,41 @@ Message.prototype.getMessage = function(pageNumber) {
 		type: 'GET',
 		url: url,
 		data: {},
-		success: function(data) {
+		dataType: 'json',
+		beforeSend: function() {
 			$('.contents').children().remove();
-			var array = $.parseJSON(data);
-			var i, message;
-			$.each(array, function(i, message) {
-				self.addNew(message.id, message.content, message.time, false, true);
-			});
+			$('.contents').append('<div class="loading">正在努力加载内容...</div>');
+		},
+		success: function(data) {
+			switch(data.status) {
+				case 'success':
+					if (data.messageNumber && page.messageNumber) {
+						$('.contents>.loading').remove();
+						var array = data.result;
+						console.log('Pass');
+						var i, message;
+						$.each(array, function(i, message) {
+							self.addNew(message.id, message.content, message.time, false, true);
+						});
+					} else if (!page.messageNumber) {
+						page.changeLoadingStatus('adding', '还没有一条微博呢，快发射吧');
+					} else {
+						page.changeLoadingStatus('error', '还没有开耕到这里');
+					}
+					break;
+				case 'input error':
+					page.changeLoadingStatus('error', '你似乎输入了错误的页码');
+					break;
+				case 'sql error':
+					page.changeLoadingStatus('error', '数据库查询失败');
+					break;
+				case 'database error':
+					page.changeLoadingStatus('error', '数据库载入失败');
+					break;
+			}
 		},
 		error: function() {
-			alert('hello');
+			page.changeLoadingStatus('error', '未知错误');
 		}
 	});	
 }
@@ -101,9 +126,6 @@ Message.prototype.editMessage = function(parentElement, id, content, callback) {
 		});
 	}
 
-	console.log('outside ajax' + success);
-
-//	return {success: success, content: backContent};
 }
 
 Message.prototype.deleteMessage = function(id) {

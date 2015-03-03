@@ -105,12 +105,14 @@ Page.prototype.changePages = function(targetPageNumber) {
 
 Page.prototype.switchPage = function(targetPageNumber) {
 	this.getPageNumber(function() {
-		if (this.messageNumber != 0) {
-			message.getMessage(targetPageNumber);
+		message.getMessage(targetPageNumber);
+		if (targetPageNumber <= this.pageNumber && targetPageNumber > 0) {
+			this.changePages(targetPageNumber);
+		} else if (targetPageNumber <= 0) {
+			this.changePages(1);
 		} else {
-			this.changeLoadingStatus('adding', '还没有一条微博，快点发射吧');
+			this.changePages(this.pageNumber);
 		}
-		this.changePages(targetPageNumber);
 		var targetUrl = 'microblog.php#' + targetPageNumber;
 		console.log(this.pjax);
 		if (this.pjax === false) {

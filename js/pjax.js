@@ -26,7 +26,6 @@ $(document).ready(function() {
 	});*/
 
 	window.addEventListener('popstate', function(e){ 
-		console.log('2');
 	  	var url;
 	  	var title;
 	  	var type;
