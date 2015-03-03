@@ -1,20 +1,31 @@
 <?php
-	session_start();
-	if (!isset($_SESSION['login']))
-		header('Location: index.php');
-
+	include ('../common/common.php');
 	include('../common/dbconfig.php');
+	
+	if (!islogin()) {
+		$status = 'not login';
+	} else {
+		if (array_key_exists('id', $_POST)) {
+			$id = $_POST['id'];
+			$query = 'DELETE FROM `sky_contents` WHERE id = :id';
 
-	if (array_key_exists('id', $_POST)) {
-		$id = $_POST['id'];
-		$query = 'DELETE FROM `sky_contents` WHERE id = :id';
+			$stmt = $dbh->prepare($query);
 
-		$stmt = $dbh->prepare($query);
+			$stmt->bindValue(':id', $id);
 
-		$stmt->bindValue(':id', $id);
+			$success = $stmt->execute();
 
-		$stmt->execute();
-
-		echo json_encode('Success');
+			if ($success) {
+				$status = 'success';
+			} else {
+				$status = 'sql error';
+			}
+		} else {
+			$status = 'content missing';
+		}
 	}
+
+	$arr = Array('status' => $status);
+	
+	echo json_encode($arr);
 ?>

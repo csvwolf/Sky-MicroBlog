@@ -19,7 +19,7 @@ Message.prototype.getMessage = function(pageNumber) {
 		success: function(data) {
 			switch(data.status) {
 				case 'success':
-					if (data.messageNumber && page.messageNumber) {
+					if (data.messageNumber > 0 && page.messageNumber > 0) {
 						$('.contents>.loading').remove();
 						var array = data.result;
 						console.log('Pass');
@@ -27,7 +27,7 @@ Message.prototype.getMessage = function(pageNumber) {
 						$.each(array, function(i, message) {
 							self.addNew(message.id, message.content, message.time, false, true);
 						});
-					} else if (!page.messageNumber) {
+					} else if (page.messageNumber == 0) {
 						page.changeLoadingStatus('adding', '还没有一条微博呢，快发射吧');
 					} else {
 						page.changeLoadingStatus('error', '还没有开耕到这里');
@@ -64,6 +64,9 @@ Message.prototype.postMessage = function() {
 				var status = data.status;
 				switch(status) {
 					case 'success':
+						if (page.messageNumber == 0) {
+							$('.contents>.loading').remove();
+						}
 						message.addNew(data.id, data.content, data.time, true);
 						self.clearMessageForm($('.post-message>textarea'));
 						page.getPageNumber(page.changePages, [page.currentPage]);
@@ -135,7 +138,23 @@ Message.prototype.deleteMessage = function(id) {
 		data: {id, id},
 		dataType: 'json',
 		success: function(data) {
-
+			switch(data.status) {
+				case 'sql error':
+					alert('数据库查询失败');
+					break;
+				case 'database':
+					alert('数据库载入失败');
+					break;
+				case 'content missing':
+					alert('错误的ID值');
+					break;
+				case 'not login':
+					alert('您还未登录');
+					break;
+			}
+		},
+		error: function(data) {
+			alert('出现未知错误');
 		}
 	});
 }

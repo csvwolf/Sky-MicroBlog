@@ -26,7 +26,7 @@ Page.prototype.getPageNumber = function(callback, arg) {
 					}
 					break;
 				case 'database error':
-					self.changeLoadingStatus('error', '与服务器君的链接被终端');
+					self.changeLoadingStatus('error', '与服务器君的链接被中断');
 					break;
 				case 'sql error':
 					self.changeLoadingStatus('error', '链接君错乱&*X@#');
@@ -67,7 +67,7 @@ Page.prototype.changePages = function(targetPageNumber) {
 	targetPageNumber = parseInt(targetPageNumber);
 	$('.pages>ul').children().remove();
 //	console.log('NowPages:' + this.pageNumber);
-	if (targetPageNumber != 1) {
+	if (targetPageNumber > 1 && targetPageNumber <= this.pageNumber) {
 		$('.pages>ul').append('<li class="prev">Prev</li>');
 	}
 	for (var i = -2; i < 3; i++) {
@@ -83,7 +83,7 @@ Page.prototype.changePages = function(targetPageNumber) {
 				$('.pages>ul').append('<li class="number">' + (targetPageNumber + i));
 		}
 	}
-	if (targetPageNumber != this.pageNumber)
+	if (targetPageNumber < this.pageNumber && targetPageNumber > 0)
 		$('.pages>ul').append('<li class="next">Next</li>');
 
 	$('.pages>ul .prev').click(function() {
@@ -109,9 +109,9 @@ Page.prototype.switchPage = function(targetPageNumber) {
 		if (targetPageNumber <= this.pageNumber && targetPageNumber > 0) {
 			this.changePages(targetPageNumber);
 		} else if (targetPageNumber <= 0) {
-			this.changePages(1);
+			this.changePages(0);
 		} else {
-			this.changePages(this.pageNumber);
+			this.changePages(this.pageNumber + 1);
 		}
 		var targetUrl = 'microblog.php#' + targetPageNumber;
 		console.log(this.pjax);
