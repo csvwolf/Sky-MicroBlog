@@ -27,7 +27,7 @@ Message.prototype.getMessage = function(pageNumber) {
 
 Message.prototype.postMessage = function() {
 	var self = this;
-	if (!this.checkMessageForm()) {
+	if (!this.checkMessageForm($('.post-message>textarea'))) {
 		alert('数据为空，不开心');
 	} else {
 		$.ajax({
@@ -40,7 +40,7 @@ Message.prototype.postMessage = function() {
 				switch(status) {
 					case 'success':
 						message.addNew(data.id, data.content, data.time, true);
-						self.clearMessageForm();
+						self.clearMessageForm($('.post-message>textarea'));
 						page.getPageNumber(page.changePages, [page.currentPage]);
 						break;
 					case 'not login':
@@ -62,19 +62,48 @@ Message.prototype.postMessage = function() {
 	}
 }
 
-Message.prototype.editMessage = function(id, content) {
-	$.ajax({
-		type: 'POST',
-		url: 'core/edit-message.php',
-		data: {id: id, content: content},
-		dataType: 'json',
-		success: function(data) {
+Message.prototype.editMessage = function(parentElement, id, content, callback) {
+	var backContent;
+	var success = false;
+	if (!this.checkMessageForm(parentElement.find('textarea'))) {
+		alert('数据为空，不开心');
+	} else {
+		$.ajax({
+			type: 'POST',
+			url: 'core/edit-message.php',
+			data: {id: id, content: content},
+			dataType: 'json',
+			success: function(data) {
+				switch(data.status) {
+					case 'database error':
+						alert('数据库载入失败');
+						break;
+					case 'sql error':
+						alert('数据库查询失败');
+						break;
+					case 'not login':
+						alert('您还未登录');
+						break;
+					case 'success':
+						success = true;
+						backContent = data.content;
+						break;
+				}
+			},
+			error: function() {
+				alert('未知错误');
+			},
+			complete: function() {
+				if (success) {
+					callback(backContent);
+				}
+			}
+		});
+	}
 
-		},
-		error: function() {
+	console.log('outside ajax' + success);
 
-		}
-	});
+//	return {success: success, content: backContent};
 }
 
 Message.prototype.deleteMessage = function(id) {
@@ -144,10 +173,12 @@ Message.prototype.addNew = function(id, content ,time, fade, load) {
 
 		confirm.click(function() {
 			var content = parent.find('textarea').val();
-			parent.find('.text-main').html(content);
-			parent.find('ul').css({display:'block'});
-			parent.find('button').css({display: 'none'});
-			self.editMessage(id, content);
+			var result = self.editMessage(parent, id, content, function(backContent){
+				parent.find('.text-main').html(backContent);
+				parent.find('ul').css({display:'block'});
+				parent.find('button').css({display: 'none'});				
+			});
+			console.log(result);
 		});
 		return false;
 	});
@@ -161,12 +192,12 @@ Message.prototype.addNew = function(id, content ,time, fade, load) {
 	});
 }
 
-Message.prototype.clearMessageForm = function() {
-	$('.post-message>textarea').val('');
+Message.prototype.clearMessageForm = function(textClass) {
+	textClass.val('');
 }
 
-Message.prototype.checkMessageForm = function() {
-	return $('.post-message>textarea').val().trim() == ''?false:true;
+Message.prototype.checkMessageForm = function(textClass) {
+	return textClass.val().trim() == '' ? false : true;
 }
 
 var message = new Message();

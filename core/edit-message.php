@@ -2,10 +2,12 @@
 	include('../common/common.php');
 	include('../common/dbconfig.php');
 
+	$arr = Array();
+
 	if (!islogin()) {
-		$error = true;
+		$status = 'not login';
 	} else {
-		if (!empty($_POST['content'])) {
+		if (array_key_exists('content', $_POST) && !empty($_POST['content'])) {
 			$content = filterString($_POST['content']);
 			$id = $_POST['id'];
 
@@ -16,13 +18,22 @@
 			$stmt->bindValue(':content', $content);
 			$stmt->bindValue(':id', $id);
 
-			$stmt->execute();
+			$success = $stmt->execute();
 
-			echo json_encode($content);
+			if (!$success) {
+				$stats = 'sql error';
+			}
+
+			$arr['content'] = $content;
+
 		} else {
-			exit;
+			$status = 'content missing';
 		}
 	}
+
+	$arr['status'] = $status;
+
+	echo json_encode($arr);
 
 //	echo date('Y-M-D H:i:s');
 
