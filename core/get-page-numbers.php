@@ -3,14 +3,14 @@
 	$result = -1;
 	$messageNumber = -1;
 
-	if (!$error) {
+	if ($status == 'success') {
 		$query = 'SELECT COUNT(*) FROM `sky_contents`';
 
 		$stmt = $dbh->prepare($query);
 
-		$error = !$stmt->execute();
+		$success = !$stmt->execute();
 
-		if (!$error) {
+		if (!$success) {
 			$result = $stmt->fetch(PDO::FETCH_NUM);
 			$result =  $result[0];
 			$messageNumber = $result;
@@ -22,7 +22,9 @@
 			}
 
 			$result = (int)$result;
+		} else {
+			$status = 'sql error';
 		}
 	}
-	echo json_encode(Array('error' => $error, 'pageNumber' => $result, 'messageNumber' => $messageNumber));
+	echo json_encode(Array('status' => $status, 'pageNumber' => $result, 'messageNumber' => $messageNumber));
 ?>

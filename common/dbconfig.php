@@ -6,10 +6,10 @@
 
 	$dsn = 'mysql:dbname=' . $dbname . ';host=' . $dbhost . ';';
 
-	$error = false;
+	$status = 'success';
 	try {
 		$dbh = new PDO($dsn, $user, $password);
 	} catch (PDOException $e) {
-		$error = true;
+		$status = 'database error';
 	}
 ?>

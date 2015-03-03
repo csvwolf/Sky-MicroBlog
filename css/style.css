@@ -322,16 +322,9 @@ ul {
 }
 
 .container .pages ul .current {
-	display: inline-block;
-	border: 1px solid rgba(255, 255, 255, 0.1);
 	background: transparent;
-	height: 30px;
-	min-width: 30px;
-	line-height: 30px;
-	padding: 5px;
-	font-size: 0.8em;
 	color: rgba(255, 255, 255, 0.6);
-	cursor: pointer;
+	cursor: default;
 }
 
 .loading {

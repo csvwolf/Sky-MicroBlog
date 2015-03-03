@@ -12,20 +12,25 @@ Page.prototype.getPageNumber = function(callback, arg) {
 		data: {},
 		dataType: 'json',
 		success: function(data) {
-			var error = data.error;
+			var status = data.status;
 			var pageNumber = data.pageNumber;
 			var messageNumber = data.messageNumber;
 	//		alert('error');
-			if (!error) {
-	//			alert('Hello');
-				self.pageNumber = pageNumber;
-				self.messageNumber = messageNumber;
-	//			console.log(self.pageNumber);
-				if (callback) {
-					callback.apply(self, arg);
-				}
-			} else {
-				self.changeLoadingStatus('error', '加载失败啦');
+			switch (status) {
+				case 'success':
+					self.pageNumber = pageNumber;
+					self.messageNumber = messageNumber;
+		//			console.log(self.pageNumber);
+					if (callback) {
+						callback.apply(self, arg);
+					}
+					break;
+				case 'database error':
+					self.changeLoadingStatus('error', '与服务器君的链接被终端');
+					break;
+				case 'sql error':
+					self.changeLoadingStatus('error', '链接君错乱&*X@#');
+					break;
 			}
 		},
 		error: function(error) {
@@ -100,12 +105,18 @@ Page.prototype.changePages = function(targetPageNumber) {
 
 Page.prototype.switchPage = function(targetPageNumber) {
 	this.getPageNumber(function() {
-		message.getMessage(targetPageNumber);
+		if (this.messageNumber != 0) {
+			message.getMessage(targetPageNumber);
+		} else {
+			this.changeLoadingStatus('adding', '还没有一条微博，快点发射吧');
+		}
 		this.changePages(targetPageNumber);
 		var targetUrl = 'microblog.php#' + targetPageNumber;
 		console.log(this.pjax);
-		if (!this.pjax) {
+		if (this.pjax === false) {
 			window.history.pushState({type: 'page', pageNumber: targetPageNumber, title: 'MicroBlog', url: targetUrl}, 'MicroBlog', targetUrl);
+		} else if (this.pjax === undefined) {
+			window.history.replaceState({type: 'page', pageNumber: targetPageNumber, title: 'MicroBlog', url: targetUrl}, 'MicroBlog', targetUrl);			
 		}
 		this.pjax = false;
 	});
