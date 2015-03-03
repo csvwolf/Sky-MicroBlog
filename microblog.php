@@ -8,7 +8,7 @@
 ?>
 	<div class="container microblog">
 		<header>
-			<h1><a href="#">Power Wind</a></h1>
+			<h1><a href="javascript:void(0)">Power Wind</a></h1>
 			<span>坑爹的微博System</span>
 		</header>
 		<div class="post">
@@ -19,12 +19,12 @@
 			</form>
 		</div>
 		<div class="contents">
-			<span>正在努力加载内容...</span>
+			<div class="loading">正在努力加载内容...</div>
 		</div>
 		<div class="pages">
 			<ul>
-				<span>正在努力加载页码...</span>
-<!-- 				<li class="prev">Prev</li>
+<!-- 				<div class="loading">正在努力加载页码...</div>
+ --><!-- 				<li class="prev">Prev</li>
 				<li class="current number">1</li>
 				<li class="number">2</li>
 				<li class="number">3</li>

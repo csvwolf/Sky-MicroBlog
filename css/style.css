@@ -334,6 +334,24 @@ ul {
 	cursor: pointer;
 }
 
+.loading {
+	background: url('../img/pikaloading.gif') no-repeat left;
+	background-size: 80px auto;
+	height: 80px;
+	padding-left: 85px;
+	margin: 0 auto;
+	display: table;
+	line-height: 80px;
+}
+
+.loading.error {
+	background-image: url('../img/error.png');
+}
+
+.loading.adding {
+	background-image: url('../img/addOnePlease.gif');
+}
+
 @media(max-height: 600px) {
 	.main {
 		padding-top: 20px;

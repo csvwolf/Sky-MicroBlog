@@ -10,14 +10,50 @@ Page.prototype.getPageNumber = function(callback, arg) {
 		type: 'GET',
 		url: 'core/get-page-numbers.php',
 		data: {},
+		dataType: 'json',
 		success: function(data) {
-			self.pageNumber = data;
-//			console.log(self.pageNumber);
-			if (callback) {
-				callback.apply(self, arg);
+			var error = data.error;
+			var pageNumber = data.pageNumber;
+			var messageNumber = data.messageNumber;
+	//		alert('error');
+			if (!error) {
+	//			alert('Hello');
+				self.pageNumber = pageNumber;
+				self.messageNumber = messageNumber;
+	//			console.log(self.pageNumber);
+				if (callback) {
+					callback.apply(self, arg);
+				}
+			} else {
+				self.changeLoadingStatus('error', '加载失败啦');
 			}
+		},
+		error: function(error) {
+			self.changeLoadingStatus('error', '加载失败啦');
 		}
 	});
+}
+
+Page.prototype.changeLoadingStatus = function (status, word) {
+	var loading = $('.loading');
+
+	word = word || '正在努力加载内容...';
+
+	switch (status) {
+		case 'loading':
+			loading.attr('class', 'loading');
+			break;
+		case 'error':
+			loading.attr('class', 'loading error');
+			break;
+		case 'adding':
+			loading.attr('class', 'loading adding');
+			break;
+		default:
+			loading.attr('class', 'loading');
+	}
+
+	loading.html(word);
 }
 
 Page.prototype.changePages = function(targetPageNumber) {
@@ -25,7 +61,7 @@ Page.prototype.changePages = function(targetPageNumber) {
 	//alert(targetPageNumber);
 	targetPageNumber = parseInt(targetPageNumber);
 	$('.pages>ul').children().remove();
-	console.log('NowPages:' + this.pageNumber);
+//	console.log('NowPages:' + this.pageNumber);
 	if (targetPageNumber != 1) {
 		$('.pages>ul').append('<li class="prev">Prev</li>');
 	}

@@ -25,6 +25,22 @@ Message.prototype.getMessage = function(pageNumber) {
 	});	
 }
 
+Message.prototype.postMessage = function() {
+	$.ajax({
+		type: 'POST',
+		url: 'core/post-message.php',
+		data: $('.post-message').serialize(),
+		dataType: 'json',
+		success: function(data) {
+			//alert(data.id);
+			message.addNew(data.id, data.content, data.time, true);
+		},
+		error: function() {
+
+		}
+	});	
+}
+
 Message.prototype.editMessage = function(id, content) {
 	$.ajax({
 		type: 'POST',
@@ -54,6 +70,8 @@ Message.prototype.deleteMessage = function(id) {
 
 Message.prototype.addNew = function(id, content ,time, fade, load) {
 	var self = this;
+
+	/* append DOM part */
 	if (load)
 		$('.contents').append('<div style="display:none" class="blog-text">');
 	else
@@ -78,12 +96,15 @@ Message.prototype.addNew = function(id, content ,time, fade, load) {
 	parentContainer.find('.text-messages').append('<button id="cancel-edit">取消编辑</button><button id="confirm-edit">提交编辑</button>');
 	parentContainer.find('button').css({display: 'none'});
 
-	var editBtn = parentContainer.find('#edit');
-	var delBtn = parentContainer.find('#delete');
 
 	if ($('.blog-text').length > 5) {
 		$('.blog-text:last-child').remove();
-	}
+	}	
+
+	/* DOM event part */
+	var editBtn = parentContainer.find('#edit');
+	var delBtn = parentContainer.find('#delete');
+
 
 	editBtn.click(function(){
 		var parent = $(this).parents('.blog-text');
@@ -122,18 +143,6 @@ Message.prototype.addNew = function(id, content ,time, fade, load) {
 var message = new Message();
 
 $('.post-message>input[type="submit"]').click(function(){
-	$.ajax({
-		type: 'POST',
-		url: 'core/post-message.php',
-		data: $('.post-message').serialize(),
-		dataType: 'json',
-		success: function(data) {
-			//alert(data.id);
-			message.addNew(data.id, data.content, data.time, true);
-		},
-		error: function() {
-
-		}
-	});
+	message.postMessage();
 	return false;
 });
